@@ -32,25 +32,22 @@
 4. 将镜像上传到本地仓库
 `docker push LocalRepositoryIP:5000/TagName`     
    
-*如果本地push出错，centos 6.5 需要修改/etc/sysconfig/docker文件，在OPTIONS里面追加参数：</br>
-`--insecure-registry 10.18.1.99:5000`
-默认是从远程拉取镜像的，如果需要默认从本地拉取，那么需要再追加启动参数：</br>
-`--add-registry=10.18.1.99:5000`* 
+#### *如果本地push出错，centos 6.5 需要修改/etc/sysconfig/docker文件，在OPTIONS里面追加参数：`--insecure-registry 10.18.1.99:5000`默认是从远程拉取镜像的，如果需要默认从本地拉取，那么需要再追加启动参数：`--add-registry=10.18.1.99:5000`* </br>
 ---
 
 # Docker命令详细说明      
-- Docker Run命令，启动参数</br> 
-当我们启动一个容器时，首先需要确定这个容器是运行在前台还是运行在后台。   
-*后台模式：* 如果在docker run后面追加-d=true或者-d，那么容器将会运行在后台模式，并打印新容器ID。此时所有I/O数据只能通过网络资源或者共享卷组来进行交互。因为容器不再监听你执行docker run的这个终端命令行窗口。但你可以通过执行docker attach来重新附着到该容器的回话中。需要注意的是，容器运行在后台模式下，是不能使用--rm选项的。    
-*前台模式：* 不指定-d参数即可，Docker会在容器中启动进程，同时将当前的命令行窗口附着到容器的标准输入、标准输出和标准错误中。也就是说容器中所有的输出都可以在当前窗口中看到。甚至它都可以虚拟出一个TTY窗口，来执行信号中断。这一切都是可以配置的：     
-`-a=[]          　	: Attach to 'STDIN', 'STDOUT' and/or 'STDERR'`      
-如果在执行run命令时没有指定-a参数，那么Docker默认会挂载所有标准数据流，包括输入输出和错误，你可以单独指定挂载哪个标准流。   
-`$ sudo docker run -a stdin -a stdout -i -t ubuntu /bin/bash`    
-`-t=false			: Allocate a pseudo-tty`    
-`--sig-proxy=true	: Proxify all received signal to the process (non-TTY mode only)`     
-`-i=false			: Keep STDIN open even if not attached`    
-如果要进行交互式操作（例如Shell脚本），那我们必须使用-i -t参数同容器进行数据交互。但是当通过管道同容器进行交互时，就不需要使用-t参数，例如下面的命令：    
-`echo test | docker run -i busybox cat`   
+- Docker Run命令，启动参数</br>
+当我们启动一个容器时，首先需要确定这个容器是运行在前台还是运行在后台。</br>
+*后台模式：* 如果在docker run后面追加-d=true或者-d，那么容器将会运行在后台模式，并打印新容器ID。此时所有I/O数据只能通过网络资源或者共享卷组来进行交互。因为容器不再监听你执行docker run的这个终端命令行窗口。但你可以通过执行docker attach来重新附着到该容器的回话中。需要注意的是，容器运行在后台模式下，是不能使用--rm选项的。</br>
+*前台模式：* 不指定-d参数即可，Docker会在容器中启动进程，同时将当前的命令行窗口附着到容器的标准输入、标准输出和标准错误中。也就是说容器中所有的输出都可以在当前窗口中看到。甚至它都可以虚拟出一个TTY窗口，来执行信号中断。这一切都是可以配置的：</br>
+`-a=[]          　	: Attach to 'STDIN', 'STDOUT' and/or 'STDERR'`</br>
+如果在执行run命令时没有指定-a参数，那么Docker默认会挂载所有标准数据流，包括输入输出和错误，你可以单独指定挂载哪个标准流。</br>
+`$ sudo docker run -a stdin -a stdout -i -t ubuntu /bin/bash`</br>
+`-t=false			: Allocate a pseudo-tty` </br>
+`--sig-proxy=true	: Proxify all received signal to the process (non-TTY mode only)`</br>
+`-i=false			: Keep STDIN open even if not attached`</br>
+如果要进行交互式操作（例如Shell脚本），那我们必须使用-i -t参数同容器进行数据交互。但是当通过管道同容器进行交互时，就不需要使用-t参数，例如下面的命令：</br>
+`echo test | docker run -i busybox cat`</br>
 ---
 
 
